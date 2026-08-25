@@ -1,6 +1,9 @@
-ACL4SSR_Online_Full_WithIcon:
+ACL4SSR_Online_Full_WithIcon-放在脚本位置:
 
 https://ghfast.top/https://raw.githubusercontent.com/mihomo-party-org/override-hub/refs/heads/main/yaml/ACL4SSR_Online_Full_WithIcon.yaml
 
-clash-template:
+
+
+
+clash-template放在mihomo配置-远程-作为 mihomo 配置-链接位置:
 https://raw.githubusercontent.com/shiteThings/sub-store-template-script/refs/heads/main/clash-template.yaml
