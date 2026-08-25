@@ -1,0 +1,11 @@
+模板:
+https://raw.githubusercontent.com/shiteThings/sub-store-template-script/refs/heads/main/sb1.13template.json
+
+脚本:
+https://raw.githubusercontent.com/shiteThings/sub-store-template-script/refs/heads/main/singboxjs.js
+
+其中添加参数：
+name=zmto，
+zmto为订阅名，按需将订阅名更换
+
+type=组合订阅  （type是订阅类型，单条订阅无需添加此参数）

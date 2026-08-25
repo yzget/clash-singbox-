@@ -1,0 +1,7 @@
+模板:
+https://raw.githubusercontent.com/xishang0128/sub-store-template/main/sing-box.json
+
+脚本:
+https://raw.githubusercontent.com/xishang0128/sub-store-template/main/sing-box.js#name=zmto&type=2
+
+其中name=zmto，zmto为订阅名，按需将订阅名更换

@@ -1,0 +1,508 @@
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: ":9090"
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  default-nameserver:
+    - 223.5.5.5
+    - 1.1.1.1
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localhost"
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: ☑️ 手动切换
+    type: select
+    include-all: true
+
+  - name: 📲 电报消息
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: 🤖 OpenAi
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: 📹 油管视频
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: 🎥 奈飞视频
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: 📺 巴哈姆特
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: 📺 哔哩哔哩
+    type: select
+    proxies:
+      - 🎯 全球直连
+
+  - name: 🌍 国外媒体
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ☑️ 手动切换
+      - DIRECT
+
+  - name: 🌏 国内媒体
+    type: select
+    proxies:
+      - DIRECT
+      - ☑️ 手动切换
+
+  - name: 📢 谷歌FCM
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ☑️ 手动切换
+
+  - name: Ⓜ️ 微软Bing
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ☑️ 手动切换
+
+  - name: Ⓜ️ 微软云盘
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ☑️ 手动切换
+
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ☑️ 手动切换
+
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ☑️ 手动切换
+
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ☑️ 手动切换
+
+  - name: 🎶 网易音乐
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🍃 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - DIRECT
+      - ☑️ 手动切换
+
+  - name: ☁️ CloudFlareCDN
+    type: select
+    proxies:
+      - 🐟 漏网之鱼
+      - 🚀 节点选择
+      - 🎯 全球直连
+      - ☑️ 手动切换
+
+rule-providers:
+  playstore_0:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/PlayStore.list
+    path: ./ruleset/playstore_0.list
+    interval: 86400
+    format: text
+  cfnat_1:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/CFnat.list
+    path: ./ruleset/cfnat_1.list
+    interval: 86400
+    format: text
+  localareanetwork_2:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
+    path: ./ruleset/localareanetwork_2.list
+    interval: 86400
+    format: text
+  unban_3:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
+    path: ./ruleset/unban_3.list
+    interval: 86400
+    format: text
+  banad_4:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
+    path: ./ruleset/banad_4.list
+    interval: 86400
+    format: text
+  adobe_5:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/adobe.list
+    path: ./ruleset/adobe_5.list
+    interval: 86400
+    format: text
+  idm_6:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/IDM.list
+    path: ./ruleset/idm_6.list
+    interval: 86400
+    format: text
+  banprogramad_7:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
+    path: ./ruleset/banprogramad_7.list
+    interval: 86400
+    format: text
+  openai_8:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/OpenAi.yaml
+    path: ./ruleset/openai_8.yaml
+    interval: 86400
+    format: yaml
+  ai_9:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/ai.list
+    path: ./ruleset/ai_9.list
+    interval: 86400
+    format: text
+  copilot_10:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/Copilot.list
+    path: ./ruleset/copilot_10.list
+    interval: 86400
+    format: text
+  githubcopilot_11:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/GithubCopilot.list
+    path: ./ruleset/githubcopilot_11.list
+    interval: 86400
+    format: text
+  claude_12:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/Claude.list
+    path: ./ruleset/claude_12.list
+    interval: 86400
+    format: text
+  cloudflarecidr_13:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/CloudflareCIDR.list
+    path: ./ruleset/cloudflarecidr_13.list
+    interval: 86400
+    format: text
+  googlefcm_14:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/GoogleFCM.yaml
+    path: ./ruleset/googlefcm_14.yaml
+    interval: 86400
+    format: yaml
+  googlecn_15:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/GoogleCN.yaml
+    path: ./ruleset/googlecn_15.yaml
+    interval: 86400
+    format: yaml
+  steamcn_16:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/SteamCN.yaml
+    path: ./ruleset/steamcn_16.yaml
+    interval: 86400
+    format: yaml
+  bing_17:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Bing.yaml
+    path: ./ruleset/bing_17.yaml
+    interval: 86400
+    format: yaml
+  onedrive_18:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/OneDrive.yaml
+    path: ./ruleset/onedrive_18.yaml
+    interval: 86400
+    format: yaml
+  microsoft_19:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Microsoft.yaml
+    path: ./ruleset/microsoft_19.yaml
+    interval: 86400
+    format: yaml
+  apple_20:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Apple.yaml
+    path: ./ruleset/apple_20.yaml
+    interval: 86400
+    format: yaml
+  telegram_21:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml
+    path: ./ruleset/telegram_21.yaml
+    interval: 86400
+    format: yaml
+  neteasemusic_22:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/NetEaseMusic.yaml
+    path: ./ruleset/neteasemusic_22.yaml
+    interval: 86400
+    format: yaml
+  epic_23:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Epic.yaml
+    path: ./ruleset/epic_23.yaml
+    interval: 86400
+    format: yaml
+  origin_24:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Origin.yaml
+    path: ./ruleset/origin_24.yaml
+    interval: 86400
+    format: yaml
+  sony_25:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Sony.yaml
+    path: ./ruleset/sony_25.yaml
+    interval: 86400
+    format: yaml
+  steam_26:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Steam.yaml
+    path: ./ruleset/steam_26.yaml
+    interval: 86400
+    format: yaml
+  nintendo_27:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Nintendo.yaml
+    path: ./ruleset/nintendo_27.yaml
+    interval: 86400
+    format: yaml
+  youtube_28:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml
+    path: ./ruleset/youtube_28.yaml
+    interval: 86400
+    format: yaml
+  netflix_29:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Netflix.yaml
+    path: ./ruleset/netflix_29.yaml
+    interval: 86400
+    format: yaml
+  bahamut_30:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Bahamut.yaml
+    path: ./ruleset/bahamut_30.yaml
+    interval: 86400
+    format: yaml
+  bilibilihmt_31:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/BilibiliHMT.yaml
+    path: ./ruleset/bilibilihmt_31.yaml
+    interval: 86400
+    format: yaml
+  bilibili_32:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Bilibili.yaml
+    path: ./ruleset/bilibili_32.yaml
+    interval: 86400
+    format: yaml
+  chinamedia_33:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list
+    path: ./ruleset/chinamedia_33.list
+    interval: 86400
+    format: text
+  proxymedia_34:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list
+    path: ./ruleset/proxymedia_34.list
+    interval: 86400
+    format: text
+  emby_35:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/Emby.list
+    path: ./ruleset/emby_35.list
+    interval: 86400
+    format: text
+  proxygfwlist_36:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ProxyGFWlist.yaml
+    path: ./ruleset/proxygfwlist_36.yaml
+    interval: 86400
+    format: yaml
+  proxy_37:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/UlinoyaPed/ShellClash/dev/lists/proxy.list
+    path: ./ruleset/proxy_37.list
+    interval: 86400
+    format: text
+  direct_38:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/UlinoyaPed/ShellClash/dev/lists/direct.list
+    path: ./ruleset/direct_38.list
+    interval: 86400
+    format: text
+  chinadomain_39:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
+    path: ./ruleset/chinadomain_39.list
+    interval: 86400
+    format: text
+  chinacompanyip_40:
+    type: http
+    behavior: ipcidr
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaCompanyIp.yaml
+    path: ./ruleset/chinacompanyip_40.yaml
+    interval: 86400
+    format: yaml
+  download_41:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list
+    path: ./ruleset/download_41.list
+    interval: 86400
+    format: text
+
+rules:
+  - RULE-SET,playstore_0,🚀 节点选择
+  - RULE-SET,cfnat_1,🎯 全球直连
+  - RULE-SET,localareanetwork_2,🎯 全球直连
+  - RULE-SET,unban_3,🎯 全球直连
+  - RULE-SET,banad_4,🛑 广告拦截
+  - RULE-SET,adobe_5,🍃 应用净化
+  - RULE-SET,idm_6,🍃 应用净化
+  - RULE-SET,banprogramad_7,🍃 应用净化
+  - RULE-SET,openai_8,🤖 OpenAi
+  - RULE-SET,ai_9,🤖 OpenAi
+  - RULE-SET,copilot_10,🤖 OpenAi
+  - RULE-SET,githubcopilot_11,🤖 OpenAi
+  - RULE-SET,claude_12,🤖 OpenAi
+  - RULE-SET,cloudflarecidr_13,☁️ CloudFlareCDN
+  - RULE-SET,googlefcm_14,📢 谷歌FCM
+  - RULE-SET,googlecn_15,🚀 节点选择
+  - RULE-SET,steamcn_16,🎯 全球直连
+  - RULE-SET,bing_17,Ⓜ️ 微软Bing
+  - RULE-SET,onedrive_18,Ⓜ️ 微软云盘
+  - RULE-SET,microsoft_19,Ⓜ️ 微软服务
+  - RULE-SET,apple_20,🍎 苹果服务
+  - RULE-SET,telegram_21,📲 电报消息
+  - RULE-SET,neteasemusic_22,🎶 网易音乐
+  - RULE-SET,epic_23,🎮 游戏平台
+  - RULE-SET,origin_24,🎮 游戏平台
+  - RULE-SET,sony_25,🎮 游戏平台
+  - RULE-SET,steam_26,🎮 游戏平台
+  - RULE-SET,nintendo_27,🎮 游戏平台
+  - RULE-SET,youtube_28,📹 油管视频
+  - RULE-SET,netflix_29,🎥 奈飞视频
+  - RULE-SET,bahamut_30,📺 巴哈姆特
+  - RULE-SET,bilibilihmt_31,📺 哔哩哔哩
+  - RULE-SET,bilibili_32,📺 哔哩哔哩
+  - RULE-SET,chinamedia_33,🌏 国内媒体
+  - RULE-SET,proxymedia_34,🌍 国外媒体
+  - RULE-SET,emby_35,🌍 国外媒体
+  - RULE-SET,proxygfwlist_36,🚀 节点选择
+  - RULE-SET,proxy_37,🚀 节点选择
+  - RULE-SET,direct_38,🎯 全球直连
+  - RULE-SET,chinadomain_39,🎯 全球直连
+  - RULE-SET,chinacompanyip_40,🎯 全球直连
+  - RULE-SET,download_41,🎯 全球直连
+  - GEOIP,cloudflare,☁️ CloudFlareCDN
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼

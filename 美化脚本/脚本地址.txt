@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/Keywos/rule/main/rename.js

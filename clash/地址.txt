@@ -1,0 +1,16 @@
+clash基础配置-substore3:
+https://gist.githubusercontent.com/wynemo/1f36290cff5e699df12bff5e5be1d782/raw/51b6b571ea91b399ba7b3be7663f3dcb0a84c962/sub_store_file.yml	
+
+Lite精简：
+https://raw.githubusercontent.com/sev7enshare/Clash-Config/refs/heads/main/clash-lite.yaml
+
+standard-noicon标准：
+https://raw.githubusercontent.com/sev7enshare/Clash-Config/refs/heads/main/clash-standard-noicon.yaml
+
+advanced全分组重度依赖：
+https://raw.githubusercontent.com/sev7enshare/Clash-Config/refs/heads/main/clash-advanced.yaml
+
+CLash配置文件仓库地址: https://github.com/sev7enshare/Clash-Config
+
+sub-store优化排序脚本：https://raw.githubusercontent.com/Keywos/rule/main/rename.js
+

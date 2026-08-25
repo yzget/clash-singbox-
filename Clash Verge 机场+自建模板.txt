@@ -1,0 +1,231 @@
+# ==============================
+# Clash Verge 高级多机场模板
+# 只需修改订阅链接和自建节点即可使用
+# ==============================
+
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+unified-delay: true
+tcp-concurrent: true
+ipv6: false
+external-controller: 127.0.0.1:9090
+
+# ==============================
+# DNS 设置
+# ==============================
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  fallback:
+    - 1.1.1.1
+    - 8.8.8.8
+
+# ==============================
+# 多机场订阅
+# ==============================
+proxy-providers:
+  Airport1:
+    type: http
+    url: "替换为你的订阅链接1"
+    interval: 21600
+    path: ./providers/airport1.yaml
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+  Airport2:
+    type: http
+    url: "替换为你的订阅链接2"
+    interval: 21600
+    path: ./providers/airport2.yaml
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+# ==============================
+# 自建节点示例
+# ==============================
+proxies:
+  - name: "ss1"
+    type: ss
+    server: server地址
+    port: 端口
+    cipher: aes-128-gcm
+    udp: true
+    password: "密码"
+
+  - name: "VLESS-WS-TLS"
+    type: vless
+    server: your.server.com
+    port: 443
+    uuid: your-uuid
+    tls: true
+    network: ws
+    servername: your.server.com
+    alpn: [h2]
+    encryption: ""
+    ws-opts:
+      path: "/"
+      headers:
+        Host: your.server.com
+
+  - name: "VLESS-XHTTP"
+    type: vless
+    server: your.server.com
+    port: 443
+    uuid: your-uuid
+    tls: true
+    network: xhttp
+    alpn: [h2]
+    servername: your.server.com
+    encryption: ""
+    xhttp-opts:
+      path: "/"
+      host: your.server.com
+
+
+# ==============================
+# 策略组
+# ==============================
+proxy-groups:
+  - name: 🌍 节点选择
+    type: select
+    proxies:
+      - 🚀 自动选择
+      - 🇭🇰 香港节点
+      - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
+      - 🇸🇬 新加坡节点
+      - 🎬 流媒体
+      - 🤖 AI 专用
+      - 📱 TikTok 专用
+      - 🧠 手动选择
+      - DIRECT
+
+  - name: 🚀 自动选择
+    type: url-test
+    use:
+      - Airport1
+      - Airport2
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  - name: 🧠 手动选择
+    type: select
+    use:
+      - Airport1
+      - Airport2
+    proxies:
+      - ss1
+      - VLESS-WS-TLS
+      - VLESS-XHTTP
+
+  - name: 🇭🇰 香港节点
+    type: url-test
+    use:
+      - Airport1
+      - Airport2
+    filter: "香港|HK"
+    interval: 300
+
+  - name: 🇺🇸 美国节点
+    type: url-test
+    use:
+      - Airport1
+      - Airport2
+    filter: "美国|US"
+    interval: 300
+
+  - name: 🇯🇵 日本节点
+    type: url-test
+    use:
+      - Airport1
+      - Airport2
+    filter: "日本|JP"
+    interval: 300
+
+  - name: 🇸🇬 新加坡节点
+    type: url-test
+    use:
+      - Airport1
+      - Airport2
+    filter: "新加坡|SG"
+    interval: 300
+
+  - name: 🎬 流媒体
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇸🇬 新加坡节点
+      - 🚀 自动选择
+
+  - name: 🤖 AI 专用
+    type: select
+    proxies:
+      - 🇺🇸 美国节点
+      - 🚀 自动选择
+
+  - name: 📱 TikTok 专用
+    type: select
+    proxies:
+      - 🇸🇬 新加坡节点
+      - 🚀 自动选择
+
+# ==============================
+# 规则
+# ==============================
+
+rules:
+
+# 🤖 AI
+- DOMAIN-SUFFIX,openai.com,🤖 AI 专用
+- DOMAIN-SUFFIX,chatgpt.com,🤖 AI 专用
+- DOMAIN-SUFFIX,oaistatic.com,🤖 AI 专用
+- DOMAIN-SUFFIX,oaiusercontent.com,🤖 AI 专用
+- DOMAIN-SUFFIX,anthropic.com,🤖 AI 专用
+- DOMAIN-SUFFIX,claude.ai,🤖 AI 专用
+- DOMAIN-SUFFIX,gemini.google.com,🤖 AI 专用
+
+# 📱 TikTok（完整版）
+- DOMAIN-SUFFIX,tiktok.com,📱 TikTok 专用
+- DOMAIN-SUFFIX,tiktokv.com,📱 TikTok 专用
+- DOMAIN-SUFFIX,tiktokcdn.com,📱 TikTok 专用
+- DOMAIN-SUFFIX,byteoversea.com,📱 TikTok 专用
+- DOMAIN-SUFFIX,ibytedtos.com,📱 TikTok 专用
+- DOMAIN-SUFFIX,muscdn.com,📱 TikTok 专用
+
+# 🎬 流媒体
+- DOMAIN-SUFFIX,netflix.com,🎬 流媒体
+- DOMAIN-SUFFIX,nflxvideo.net,🎬 流媒体
+- DOMAIN-SUFFIX,disneyplus.com,🎬 流媒体
+
+# 📺 香港电视
+- DOMAIN-SUFFIX,mytvsuper.com,🇭🇰 香港节点
+- DOMAIN-SUFFIX,tvb.com,🇭🇰 香港节点
+- DOMAIN-SUFFIX,viu.tv,🇭🇰 香港节点
+
+# 🔍 Google & YouTube
+- DOMAIN-SUFFIX,google.com,🌍 节点选择
+- DOMAIN-SUFFIX,googleapis.com,🌍 节点选择
+- DOMAIN-SUFFIX,gstatic.com,🌍 节点选择
+- DOMAIN-SUFFIX,youtube.com,🌍 节点选择
+- DOMAIN-SUFFIX,googlevideo.com,🌍 节点选择
+- DOMAIN-SUFFIX,ytimg.com,🌍 节点选择
+
+# 📩 Telegram
+- DOMAIN-SUFFIX,telegram.org,🌍 节点选择
+
+# 🇨🇳 国内直连
+- GEOIP,CN,DIRECT
+
+# 兜底
+- MATCH,🌍 节点选择
